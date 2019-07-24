@@ -1,0 +1,36 @@
+Arguments: 
+  /Users/ghsyeung/.nvm/versions/node/v11.1.0/bin/node /Users/ghsyeung/.yarn/bin/yarn.js init
+
+PATH: 
+  /usr/local/opt/ruby/bin:/Users/ghsyeung/.yarn/bin:/Users/ghsyeung/anaconda3/bin:/Users/ghsyeung/.nvm/versions/node/v11.1.0/bin:/Users/ghsyeung/lib/git-subrepo/lib:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/ghsyeung/Coding/android-sdk-macosx/tools:/Users/ghsyeung/Coding/android-sdk-macosx/platform-tools:/Users/ghsyeung/Coding/android-sdk-macosx/build-tools/22.0.1:/usr/local/go/bin:/Users/ghsyeung/bin:/Users/ghsyeung/.purs/bin:/Users/ghsyeung/.local/bin:/Users/ghsyeung/bin:/Users/ghsyeung/.local/bin:/Users/ghsyeung/.fzf/bin:/usr/local/opt/openvpn/sbin:/Users/ghsyeung/.gem/ruby/2.6.0/bin
+
+Yarn version: 
+  1.12.1
+
+Node version: 
+  11.1.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/Users/ghsyeung/.yarn/lib/cli.js:120807:13)
+      at Interface.emit (events.js:182:13)
+      at Interface._ttyWrite (readline.js:793:16)
+      at ReadStream.onkeypress (readline.js:178:10)
+      at ReadStream.emit (events.js:182:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1030:36)
+      at ReadStream.emit (events.js:182:13)
+      at addChunk (_stream_readable.js:283:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
