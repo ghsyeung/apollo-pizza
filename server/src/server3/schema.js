@@ -33,6 +33,9 @@ const schema = gql`
   type Mutation {
     addOrder(newOrder: NewOrder!): Order
     signUp(name: String!, email: String!, password: String!): User
+
+    # NEW!!
+    login(email: String!, password: String!): Boolean
   }
 `;
 

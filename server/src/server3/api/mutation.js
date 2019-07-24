@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server');
 const { users, orders } = require('../data');
 
 const Mutation = {
@@ -14,6 +15,14 @@ const Mutation = {
       name, email, password
     });
     return users[users.length - 1];
+  },
+  // NEW!!
+  login(_, {email, password}) {
+    if(users.some(u => u.email === email &&
+      u.password === password)) {
+      return true;
+    }
+    throw new AuthenticationError("Invalid login!");
   }
 };
 
