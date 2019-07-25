@@ -1,3 +1,3 @@
-const {run} = require('./server10');
+const {run} = require('./server1');
 run();
 
