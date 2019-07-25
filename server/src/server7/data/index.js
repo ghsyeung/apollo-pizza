@@ -1,3 +1,10 @@
+function removePassword(user) {
+  return {
+    ...user,
+    password: undefined,
+  };
+}
+
 const users = [
   {
     name: "Gary",
@@ -24,4 +31,5 @@ const orders = [
 module.exports = {
   users,
   orders,
+  removePassword,
 };

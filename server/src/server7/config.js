@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-// NEW!!
 function createExpressApp() {
   const app = express();
   app.use(cookieParser());
@@ -24,7 +23,6 @@ function createExpressApp() {
   return app;
 }
 
-// NEW!!
 const tokenConfig = {
   secret:process.env.JWT_SECRET || 'keyboardcat',
   name: 'pizzaUser',

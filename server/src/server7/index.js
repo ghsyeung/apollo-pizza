@@ -27,7 +27,6 @@ function run() {
 
     context: ({req}) => ({
       req,
-      // NEW!!
       [tokenConfig.name]: req.cookies[tokenConfig.name],
     }),
   });
