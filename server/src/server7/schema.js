@@ -23,10 +23,8 @@ const schema = gql`
     whoami: User
   }
 
+  # NEW!! (removed orderBy)
   input NewOrder {
-    "ID of the user creating the order"
-    orderBy: ID!
-
     "Toppings on the pizza"
     toppings: [String]!
   }
@@ -35,8 +33,6 @@ const schema = gql`
     addOrder(newOrder: NewOrder!): Order
     signUp(name: String!, email: String!, password: String!): User
     login(email: String!, password: String!): Boolean
-    
-    # NEW!!
     logout: Boolean
     
     # Just for fun
