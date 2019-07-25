@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {setCookie, unsetCookie} = require("./util");
 const {AuthenticationError} = require('apollo-server');
@@ -23,24 +24,29 @@ const Mutation = {
     }
     throw new AuthenticationError("Cannot add order unless you are logged in");
   },
-  signUp(_, {name, email, password}) {
-    users.push({
-      name, email, password,
-    });
+  async signUp(_, {name, email, password}) {
+    // NEW!!
+    const hashedPassword = await bcrypt.hash(password, 10);
 
+    users.push({
+      name, email, password: hashedPassword,
+    });
     return users[users.length - 1];
   },
-  login(_, {email, password}, {req}) {
+  async login(_, {email, password}, {req}) {
     // NEW!!
-    const userId = users.findIndex(u => u.email === email && u.password === password);
+    const userId = users.findIndex(u => u.email === email);
     if (userId !== -1) {
-      setCookie({
-        name: tokenConfig.name,
-        value: generateToken({...users[userId], id: userId}, tokenConfig.secret,),
-        res: req.res,
-      })
-      ;
-      return true;
+      const same = await bcrypt.compare(password, users[userId].password);
+      if (same) {
+        setCookie({
+          name: tokenConfig.name,
+          value: generateToken({...users[userId], id: userId}, tokenConfig.secret,),
+          res: req.res,
+        })
+        ;
+        return true;
+      }
     }
     throw new AuthenticationError("Invalid login!");
   },
