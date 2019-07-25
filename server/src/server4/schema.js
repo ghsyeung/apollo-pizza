@@ -19,7 +19,7 @@ const schema = gql`
   type Query {
     getUsers: [User]
     getOrders: [Order]
-    getUser(id:ID): [User]
+    getUser(id:ID!): User
   }
 
   input NewOrder {
@@ -34,6 +34,9 @@ const schema = gql`
     addOrder(newOrder: NewOrder!): Order
     signUp(name: String!, email: String!, password: String!): User
     login(email: String!, password: String!): Boolean
+    
+    # NEW!!
+    bake: Int
   }
 `;
 

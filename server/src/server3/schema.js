@@ -19,7 +19,7 @@ const schema = gql`
   type Query {
     getUsers: [User]
     getOrders: [Order]
-    getUser(id:ID): [User]
+    getUser(id:ID!): User
   }
 
   input NewOrder {
