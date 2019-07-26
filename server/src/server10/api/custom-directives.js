@@ -25,7 +25,7 @@ class AuthDirective extends SchemaDirectiveVisitor {
     const {name, resolve} = field;
     field.resolve = async function (...args) {
       const [_, __, { pizzaUserToken }] = args;
-      // NEW!!
+
       const isUserAuthenticated = pizzaUserToken !== undefined
         && jwt.verify(pizzaUserToken, tokenConfig.secret);
 
@@ -33,7 +33,6 @@ class AuthDirective extends SchemaDirectiveVisitor {
       if (!isUserAuthenticated) {
         throw new AuthenticationError(`Not Authenticated: ${name}`);
       }
-
 
       // call the ORIGINAL resolve method
       return await resolve.apply(this, args);

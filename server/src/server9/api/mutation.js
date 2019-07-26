@@ -1,13 +1,16 @@
-const jwt = require('jsonwebtoken');
-const {setCookie, unsetCookie} = require("./util");
 const {AuthenticationError} = require('apollo-server');
 const {tokenConfig} = require("../config");
 const {users, orders} = require('../data');
 
-function generateToken(user, secret) {
-  const {id, email,} = user; // Omit the password from the token
-  return jwt.sign({id, email,}, secret, {
-    expiresIn: '2h'
+function unsetCookie({name, res}) {
+  res.clearCookie(name);
+}
+
+function setCookie({name, value, res}) {
+  res.cookie(name, value, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000 * 60 * 60 * 2 // 2h
   });
 }
 
@@ -25,21 +28,18 @@ const Mutation = {
   },
   signUp(_, {name, email, password}) {
     users.push({
-      name, email, password,
+      name, email, password
     });
-
     return users[users.length - 1];
   },
   login(_, {email, password}, {req}) {
-    // NEW!!
     const userId = users.findIndex(u => u.email === email && u.password === password);
     if (userId !== -1) {
       setCookie({
         name: tokenConfig.name,
-        value: generateToken({...users[userId], id: userId}, tokenConfig.secret,),
+        value: userId,
         res: req.res,
-      })
-      ;
+      });
       return true;
     }
     throw new AuthenticationError("Invalid login!");

@@ -1,8 +1,7 @@
 const {ApolloServer} = require('apollo-server-express');
 const {tokenConfig, createExpressApp} = require('./config');
-
-// NEW!!
 const {schemaDirectives}  = require("./api/custom-directives");
+const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 4000;
 
@@ -27,14 +26,23 @@ function run() {
   // responsible for fetching the data for those types.
   const server = new ApolloServer({
     typeDefs, resolvers,
-
-    // NEW!!
     schemaDirectives,
 
-    context: ({req}) => ({
-      req,
-      [tokenConfig.name]: req.cookies[tokenConfig.name],
-    }),
+    context: ({req}) => {
+      // NEW!!
+      const jwtToken = req.cookies[tokenConfig.name];
+      const pizzaUser = jwt.decode(jwtToken, tokenConfig.secret);
+
+      // This is what passed into the 3rd argument of all resolvers
+      return {
+        req,
+        // we pass both the token and the decoded user to all resolvers
+        // - note that the token may be expired, which we will check in
+        //   the @auth directive
+        [tokenConfig.name]: req.cookies[tokenConfig.name],
+        pizzaUser,
+      };
+    },
   });
 
   server.applyMiddleware({app});

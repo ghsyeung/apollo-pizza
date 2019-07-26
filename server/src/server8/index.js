@@ -1,9 +1,6 @@
 const {ApolloServer} = require('apollo-server-express');
 const {tokenConfig, createExpressApp} = require('./config');
 
-// NEW!!
-const {schemaDirectives}  = require("./api/custom-directives");
-
 const PORT = process.env.PORT || 4000;
 
 const schema = require('./schema');
@@ -27,9 +24,6 @@ function run() {
   // responsible for fetching the data for those types.
   const server = new ApolloServer({
     typeDefs, resolvers,
-
-    // NEW!!
-    schemaDirectives,
 
     context: ({req}) => ({
       req,

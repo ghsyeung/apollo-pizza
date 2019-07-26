@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server');
 const schema = gql`
+  # NEW!!
   directive @peek on FIELD_DEFINITION
   directive @auth on FIELD_DEFINITION
 
@@ -18,10 +19,11 @@ const schema = gql`
   # The "Query" type is the root of all GraphQL queries.
   # (A "Mutation" type will be covered later on.)
   type Query {
-    getUsers: [User] 
+    # NEW!!
+    getUsers: [User] @auth
     getOrders: [Order] @auth
-    getUser(id:ID!): User
-    whoami: User
+    getUser(id:ID!): User 
+    whoami: User 
   }
 
   input NewOrder {

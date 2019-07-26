@@ -1,6 +1,8 @@
 const {SchemaDirectiveVisitor, AuthenticationError} = require("apollo-server");
+const {tokenConfig} = require('../config');
+const {unsetCookie} = require('./util');
+const jwt = require('jsonwebtoken');
 
-// NEW!!
 class DebugMethodDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const {name, type, resolve} = field;
@@ -22,11 +24,16 @@ class AuthDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const {name, resolve} = field;
     field.resolve = async function (...args) {
-      const [_, __, { pizzaUser }] = args;
+      const [_, __, { pizzaUserToken }] = args;
+      // NEW!!
+      const isUserAuthenticated = pizzaUserToken !== undefined
+        && jwt.verify(pizzaUserToken, tokenConfig.secret);
+
       // Check if user is authenticated
-      if (pizzaUser === undefined) {
+      if (!isUserAuthenticated) {
         throw new AuthenticationError(`Not Authenticated: ${name}`);
       }
+
 
       // call the ORIGINAL resolve method
       return await resolve.apply(this, args);

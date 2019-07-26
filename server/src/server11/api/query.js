@@ -5,7 +5,7 @@ const Query = {
   getOrders: () => orders,
   getUser: (_, {id}) => removePassword(users[+id]),
   whoami: (_, __, {pizzaUser}) => {
-    return pizzaUser ? removePassword(users[pizzaUser]) : undefined;
+    return pizzaUser ? removePassword(users[pizzaUser.id]) : undefined;
   },
 };
 

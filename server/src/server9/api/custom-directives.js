@@ -1,7 +1,4 @@
 const {SchemaDirectiveVisitor, AuthenticationError} = require("apollo-server");
-const {tokenConfig} = require('../config');
-const {unsetCookie} = require('./util');
-const jwt = require('jsonwebtoken');
 
 class DebugMethodDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
@@ -20,17 +17,16 @@ class DebugMethodDirective extends SchemaDirectiveVisitor {
   }
 }
 
+// NEW!!
 class AuthDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const {name, resolve} = field;
+
+    // This is just a more complete version of safeGuard in server8
     field.resolve = async function (...args) {
-      const [_, __, { pizzaUserToken }] = args;
-
-      const isUserAuthenticated = pizzaUserToken !== undefined
-        && jwt.verify(pizzaUserToken, tokenConfig.secret);
-
+      const [_, __, { pizzaUser }] = args;
       // Check if user is authenticated
-      if (!isUserAuthenticated) {
+      if (!pizzaUser) {
         throw new AuthenticationError(`Not Authenticated: ${name}`);
       }
 

@@ -15,17 +15,15 @@ function setCookie({name, value, res}) {
 }
 
 const Mutation = {
-  addOrder(_, {newOrder}, {pizzaUser}) {
-    if (pizzaUser) {
-      orders.push({
-        orderBy: +pizzaUser,
-        toppings: newOrder.toppings,
-        isCompleted: false,
-      });
-      return orders[orders.length - 1];
-    }
-    throw new AuthenticationError("Cannot add order unless you are logged in");
-  },
+  // NEW!!
+  addOrder: safeGuard((_, {newOrder}, {pizzaUser}) => {
+    orders.push({
+      orderBy: +pizzaUser,
+      toppings: newOrder.toppings,
+      isCompleted: false,
+    });
+    return orders[orders.length - 1];
+  }),
   signUp(_, {name, email, password}) {
     users.push({
       name, email, password
