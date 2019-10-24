@@ -1,4 +1,5 @@
 const {users, orders, removePassword} = require('../data');
+const { safeGuard } = require('./safeGuard');
 
 const Query = {
   // NEW!!

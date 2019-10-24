@@ -1,6 +1,7 @@
 const {AuthenticationError} = require('apollo-server');
 const {tokenConfig} = require("../config");
 const {users, orders} = require('../data');
+const {safeGuard} = require('./safeGuard');
 
 function unsetCookie({name, res}) {
   res.clearCookie(name);
