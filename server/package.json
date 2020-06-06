@@ -9,7 +9,7 @@
     "start:watch": "nodemon -w src src/index.js"
   },
   "dependencies": {
-    "apollo-server": "^2.7.0",
+    "apollo-server": "^2.14.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "cor": "^0.0.0",
